@@ -1,0 +1,34 @@
+TOKENS
+Es algo que va a existir en todas los dipositivos clientes
+y son único para cada uno de ellos. Para pedir un rescurso se 
+hace uso del token.
+No grabar datos sensibles. 
+La firma es lo más importante, porque si no coincide con lo que
+se tiene en el servidor, significa que fue modificado por el usuario. 
+
+JSON WEB TOKEN. 
+Está dividido en tres secciones, el header, el payload
+y la firma. 
+
+HEADER: contiene información sobre el tipo de 
+encriptación y el tipo de token que es. 
+
+PAYLOAD: contiene la información que queremos que
+tenaga el token. 
+
+FIRMA: información que valida que ese token es
+válido. 
+
+Variables de sesión utilizadas para manejar autenticación 
+de usuarios. 
+
+Local Storage
+Lugar donde grabamos información para que tenga información 
+persistente.
+Normalmente comparte dominio. 
+Se puede modificar y hacer un token falso. 
+
+
+Session Storage
+La diferencia con el Local Storage es que este cuando se
+cierra el navegador WEB se pierde la información
