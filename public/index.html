@@ -4,9 +4,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso denegado</title>
+    <title>Google Singin</title>
+
+
+    <meta name="google-signin-client_id" content="103960612407-9q8uuht7aqi5co1vls6gokhrq4shhs67.apps.googleusercontent.com">
 </head>
 <body>
-    <h1>Acceso Denegado</h1>
+    <h1>Google Singin</h1>
+    <hr>
+
+    
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    
+    <a href="#" onclick="signOut();">Sign out</a>
+
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        console.log(window.location.hostname.includes('localhost'))
+
+        var url = (window.location.hostname.includes('localhost'))
+                    ? 'http://localhost:8080/api/auth/google'
+                    : 'https://restserver-cursonode-nbla.herokuapp.com/api/auth/google';
+
+       
+        function onSignIn(googleUser) {
+
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            var id_token = googleUser.getAuthResponse().id_token;
+            //let id_token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjBmY2MwMTRmMjI5MzRlNDc0ODBkYWYxMDdhMzQwYzIyYmQyNjJiNmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMTAzOTYwNjEyNDA3LTF1NmNjMzRua2kwdmY4NjN2bWY3MXV0bzAxM2I1aWZ0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTAzOTYwNjEyNDA3LTF1NmNjMzRua2kwdmY4NjN2bWY3MXV0bzAxM2I1aWZ0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTExMzU1NTk0MDQ0NTYyMDkyNTk2IiwiZW1haWwiOiJuYWRpYWxvcGV6YWd1aWxhcjQzOTlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJxZ2lPY3FKWlFud1hCQS1TRHFKQXN3IiwibmFtZSI6Ik5hZGlhIEJlYXRyaXogTMOzcGV6IEFndWlsYXIiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2h6dXdLSkpnczNaWmpJMXc1QXhtRGFjQ2ZQbDRCYjJUTl9mRVlzPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik5hZGlhIEJlYXRyaXoiLCJmYW1pbHlfbmFtZSI6IkzDs3BleiBBZ3VpbGFyIiwibG9jYWxlIjoiZXMiLCJpYXQiOjE2MjgyMTM1MTEsImV4cCI6MTYyODIxNzExMSwianRpIjoiMzA1ZTc0NmNiNDJiNGNkNzdmNTgyNTM3YmM2ZTYwZGZmNmY3OTU1NSJ9.aFaF0kv1p2KICuUn32rB4sOV0IjUbfX2mWU42O_mZhoNmpEjj0YssygKuoqEu9Po5RLIPHzTEg4fVUOvZ-3cBN5p3xOK7LzYAmxY-8Z8ey9bKKWjAJ6I2ziq-pScA7nIAlA796080xo2cwK2y95zUNL083qtDDCeJBwNgXXDB-XfT4fYwPW5Y3K1KNQPbYF6ivB-v7WJuvEQ3js8LcNQ6FPw84zdKn3PK4J5-WiylEPeRY46Mrq_kQfEQnlDn63ku95OZx7E4oVT6yAUsv8sEH9cdHmIsy-TILRtnwetkMDZhLytI-k865Bab47q1vIoV6CXZ7lwrq9bcAEUbTIHNg";
+            //console.log(id_token);
+            const data = { id_token };
+            //console.log(id_token);
+            //console.log(data);
+            //console.log(url);
+
+            fetch( url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)                
+            })
+            .then( resp => resp.json() )
+            .then( data => console.log('Nuestro Server', data) )
+            .catch(console.log);
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            console.log('User signed out.');
+            });
+        }
+    </script>
 </body>
 </html>
