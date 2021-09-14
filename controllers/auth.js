@@ -67,7 +67,6 @@ const googleSingin = async(req, res = response) => {
                     correo,
                     password: ':P',
                     img, 
-                    role : 'USER_ROLE',
                     google: true
                 };
 
